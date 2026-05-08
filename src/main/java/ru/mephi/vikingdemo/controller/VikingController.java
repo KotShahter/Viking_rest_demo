@@ -4,14 +4,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.mephi.vikingdemo.model.BeardStyle;
+import ru.mephi.vikingdemo.model.HairColor;
 import ru.mephi.vikingdemo.model.Viking;
 import ru.mephi.vikingdemo.service.VikingService;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
 @RequestMapping("/api/vikings")
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class VikingController {
 
     private final VikingService vikingService;
-    private VikingListener vikingListener;
+    private final VikingListener vikingListener;
 
     public VikingController(VikingService vikingService, VikingListener vikingListener) {
         this.vikingService = vikingService;
@@ -37,6 +36,19 @@ public class VikingController {
         return vikingService.findAll();
     }
 
+
+    @DeleteMapping
+    @Operation(summary = "Удалить викинга по номеру",
+            operationId = "removeViking")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Викинг успешно удален")
+    })
+    public void removeViking(@RequestParam int id) {
+        vikingListener.testDelete(id);
+            System.out.println("DELETE /api/vikings");
+    }
+
+
     @GetMapping("/test")
     @Operation(summary = "Получить список тестовых викингов", 
             operationId = "getTest")
@@ -47,9 +59,47 @@ public class VikingController {
         System.out.println("GET /api/vikings/test called");
         return List.of("Ragnar", "Bjorn");
     }
-    
-    @PostMapping("/post")
-    public void addViking(){
-        vikingListener.testAdd();
+
+    @PostMapping("/random")
+    public void addRandomViking(){
+        vikingListener.addRandomViking();
+    }
+
+    @PostMapping("/concrete")
+    @Operation(summary = "Создать конкретного викинга",
+            operationId = "Create concrete viking")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Успешно добавлили")
+    })
+    public void addConcreteViking(
+            @RequestParam String name,
+            @RequestParam int age,
+            @RequestParam int heightCm,
+            @RequestParam HairColor hairColor,
+            @RequestParam BeardStyle beardStyle) {
+        System.out.println("Post /api/vikings/concrete");
+        vikingListener.addConcreteViking(
+                name,
+                age,
+                heightCm,
+                hairColor,
+                beardStyle);
+    }
+
+    @PatchMapping
+    @Operation(summary = "Изменить викинга",
+            operationId = "ChangeViking")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Успешно изменили викинга")
+    })
+    public void editConcreteViking(
+            @RequestParam int id,
+            @RequestParam (required = false) String name,
+            @RequestParam (required = false) Integer age,
+            @RequestParam (required = false) Integer heightCm,
+            @RequestParam (required = false) HairColor hairColor,
+            @RequestParam (required = false) BeardStyle beardStyle) {
+
+        vikingListener.editConcreteViking(id, name, age, heightCm, hairColor, beardStyle);
     }
 }

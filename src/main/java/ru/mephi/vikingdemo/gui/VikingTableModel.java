@@ -19,6 +19,11 @@ public class VikingTableModel extends AbstractTableModel {
         fireTableRowsInserted(row, row);
     }
 
+    public void editViking(int id, Viking viking) {
+        data.set(id, viking);
+        fireTableRowsUpdated(id, id);
+    }
+
     @Override
     public int getRowCount() {
         return data.size();
@@ -46,6 +51,15 @@ public class VikingTableModel extends AbstractTableModel {
             case 5 -> formatEquipment(viking.equipment());
             default -> "";
         };
+    }
+
+    private void removeRow(int row) {
+        data.remove(row);
+        fireTableRowsDeleted(row, row);
+    }
+
+    public void deleteViking(int id) {
+        this.removeRow(id);
     }
 
     private String formatEquipment(List<EquipmentItem> equipment) {
