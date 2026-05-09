@@ -10,7 +10,9 @@ import ru.mephi.vikingdemo.model.HairColor;
 import ru.mephi.vikingdemo.model.Viking;
 import ru.mephi.vikingdemo.service.VikingService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/api/vikings")
@@ -101,5 +103,13 @@ public class VikingController {
             @RequestParam (required = false) BeardStyle beardStyle) {
 
         vikingListener.editConcreteViking(id, name, age, heightCm, hairColor, beardStyle);
+    }
+
+    @PostMapping("/crowd")
+    public void addVikings(
+            @RequestParam int amount
+    )
+    {
+        IntStream.range(0, amount).forEach(b -> vikingListener.addRandomViking());
     }
 }

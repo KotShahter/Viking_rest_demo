@@ -1,6 +1,7 @@
 package ru.mephi.vikingdemo.gui;
 
 import ru.mephi.vikingdemo.model.Viking;
+import ru.mephi.vikingdemo.service.LambdaService;
 import ru.mephi.vikingdemo.service.VikingService;
 
 import javax.swing.JButton;
@@ -17,10 +18,17 @@ import java.awt.Font;
 
 public class VikingDesktopFrame extends JFrame {
 
+
     private final VikingService vikingService;
     private final VikingTableModel tableModel = new VikingTableModel();
 
+    private final ExtraFrame extraFrame;
+
     public VikingDesktopFrame(VikingService vikingService) {
+
+        extraFrame = new ExtraFrame(new LambdaService(vikingService));
+        extraFrame.setVisible(true);
+
         this.vikingService = vikingService;
 
         setTitle("Viking Demo");
@@ -47,19 +55,22 @@ public class VikingDesktopFrame extends JFrame {
 
     public void testDelete(int id)
     {
-        tableModel.deleteViking(id);
+        tableModel.deleteViking(id);extraFrame.refreshAllTables();
     }
 
     private void onCreateViking() {
         Viking viking = vikingService.createRandomViking();
         tableModel.addViking(viking);
+        extraFrame.refreshAllTables();
     }
 
     public void addNewViking(Viking viking){
         tableModel.addViking(viking);
+        extraFrame.refreshAllTables();
     }
 
     public void editViking (int id, Viking viking){
         tableModel.editViking(id, viking);
+        extraFrame.refreshAllTables();
     }
 }
