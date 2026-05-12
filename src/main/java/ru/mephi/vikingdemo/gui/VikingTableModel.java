@@ -25,6 +25,11 @@ public class VikingTableModel extends AbstractTableModel {
         fireTableRowsInserted(row, row);
     }
 
+    public void addVikings(List<Viking> vikings) {
+        data.addAll(vikings);
+        fireTableRowsInserted(0, data.size());
+    }
+
     public void editVikings(List<Viking> vikings) {
         data = vikings;
         fireTableDataChanged();

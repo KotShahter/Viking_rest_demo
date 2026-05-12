@@ -41,9 +41,10 @@ public class VikingListener {
         gui.addNewViking(service.createRandomViking());
     }
 
+
     public void addCrowd(int amount)
     {
-        IntStream.range(0, amount).forEach(b -> gui.addNewViking(service.createRandomViking()));
+        gui.addCrowd(service.createCrowd(amount));
     }
 
     public void addConcreteViking(

@@ -98,10 +98,10 @@ public class ExtraFrame extends JFrame {
                 lambdaService.rareFilter(),
                 lambdaService.gingerFilter()
         );
-        System.out.println(lambdaService.rareFilter());
 
-        for (int i = 0; i < models.size() && i < freshData.size(); i++) {
-            models.get(i).editVikings(freshData.get(i));
+        for (int x = 0; x < freshData.size(); x++)
+        {
+            models.get(x).editVikings(freshData.get(x));
         }
     }
 }

@@ -5,8 +5,11 @@ import ru.mephi.vikingdemo.model.BeardStyle;
 import ru.mephi.vikingdemo.model.HairColor;
 import ru.mephi.vikingdemo.model.Viking;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.IntStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
@@ -26,6 +29,14 @@ public class VikingService {
 
     public void deleteViking(int id) {
         vikings.remove(id);
+    }
+
+    public List<Viking> createCrowd(int amount)
+    {
+        List<Viking> viks = new ArrayList<>();
+        IntStream.range(0, amount).forEach(counter -> viks.add(vikingFactory.createRandomViking()));
+        vikings.addAll(viks);
+        return viks;
     }
 
     public Viking createRandomViking() {

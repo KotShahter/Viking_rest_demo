@@ -14,10 +14,10 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.List;
 
 
 public class VikingDesktopFrame extends JFrame {
-
 
     private final VikingService vikingService;
     private final VikingTableModel tableModel = new VikingTableModel();
@@ -71,6 +71,11 @@ public class VikingDesktopFrame extends JFrame {
 
     public void editViking (int id, Viking viking){
         tableModel.editViking(id, viking);
+        extraFrame.refreshAllTables();
+    }
+
+    public void addCrowd (List<Viking> vikings){
+        tableModel.addVikings(vikings);
         extraFrame.refreshAllTables();
     }
 }
