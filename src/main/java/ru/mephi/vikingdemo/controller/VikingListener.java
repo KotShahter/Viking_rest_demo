@@ -11,6 +11,8 @@ import ru.mephi.vikingdemo.model.BeardStyle;
 import ru.mephi.vikingdemo.model.HairColor;
 import ru.mephi.vikingdemo.service.VikingService;
 
+import java.util.stream.IntStream;
+
 /**
  *
  * @author test2023
@@ -37,6 +39,11 @@ public class VikingListener {
 
     void addRandomViking() {
         gui.addNewViking(service.createRandomViking());
+    }
+
+    void addCrowd(int amount)
+    {
+        IntStream.range(0, amount).forEach(b -> gui.addNewViking(service.createRandomViking()));
     }
 
     void addConcreteViking(

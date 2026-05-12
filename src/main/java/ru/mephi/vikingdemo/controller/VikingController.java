@@ -110,6 +110,6 @@ public class VikingController {
             @RequestParam int amount
     )
     {
-        IntStream.range(0, amount).forEach(b -> vikingListener.addRandomViking());
+        vikingListener.addCrowd(amount);
     }
 }
