@@ -31,22 +31,22 @@ public class VikingListener {
         this.gui = gui;
     }
 
-    void testDelete(int num)
+    public void testDelete(int num)
     {
         service.deleteViking(num);
         gui.testDelete(num);
     }
 
-    void addRandomViking() {
+    public void addRandomViking() {
         gui.addNewViking(service.createRandomViking());
     }
 
-    void addCrowd(int amount)
+    public void addCrowd(int amount)
     {
         IntStream.range(0, amount).forEach(b -> gui.addNewViking(service.createRandomViking()));
     }
 
-    void addConcreteViking(
+    public void addConcreteViking(
             String name,
             int age,
             int heightCm,
@@ -62,7 +62,7 @@ public class VikingListener {
         );
     }
 
-    void editConcreteViking(
+    public void editConcreteViking(
         int id,
         String name,
         Integer age,
